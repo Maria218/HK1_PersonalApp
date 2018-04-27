@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import play from './img/play.svg';
+import alert from './alarm.mp3';
 
 export class Pomodoro extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -11,7 +10,7 @@ export class Pomodoro extends Component {
       timeType: 0,
       title: ''
     };
-    // Bind early, avoid function creation on render loop
+    // Binding
     this.setTimeForCode = this.setTime.bind(this, 1500);
     this.setTimeForSocial = this.setTime.bind(this, 300);
     this.setTimeForCoffee = this.setTime.bind(this, 900);
@@ -20,10 +19,10 @@ export class Pomodoro extends Component {
     this.elapseTime = this.elapseTime.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.setDefaultTime();
-  //   Notification.requestPermission();
-  // }
+  componentDidMount() {
+    this.setDefaultTime();
+    Notification.requestPermission();
+  }
 
   elapseTime() {
     if (this.state.time === 0) {
@@ -69,9 +68,7 @@ export class Pomodoro extends Component {
 
   play() {
     if (true === this.state.play) return;
-
     this.restartInterval();
-
     this.setState({
       play: true
     });
@@ -92,7 +89,6 @@ export class Pomodoro extends Component {
 
   setTime(newTime) {
     this.restartInterval();
-
     this.setState({
       time: newTime,
       timeType: newTime,
@@ -102,7 +98,6 @@ export class Pomodoro extends Component {
 
   setDefaultTime() {
     let defaultTime = 1500;
-
     this.setState({
       time: defaultTime,
       timeType: defaultTime,
@@ -113,8 +108,6 @@ export class Pomodoro extends Component {
   toggleMode(gotoDirection) {
     let timeTypes = this.getFormatTypes();
     let currentPosition = -1;
-
-
     for (let i = 0; i < timeTypes.length; i++) {
       if (timeTypes[i].time === this.state.timeType) {
         currentPosition = i;
@@ -140,9 +133,9 @@ export class Pomodoro extends Component {
   alert() {
     // audio
     if(this.refs.audio.checked) {
-      let audio = new Audio('alarm.mp3');
+      let audio = new Audio(alert);
       audio.play();
-      setTimeout(()=> audio.pause(), 1400);
+      // setTimeout(()=> audio.pause(), 1400);
     }
     // notification
     if(this.refs.notification.checked) {
@@ -161,10 +154,8 @@ export class Pomodoro extends Component {
   }
 
   render() {
-
     return (
       <div className="pomodoro">
-
         {/* Main section
         ------------------------------- */}
         <div className="main">
@@ -201,7 +192,6 @@ export class Pomodoro extends Component {
               </div>
 
               <div className="controlsCheck">
-
                 <span className="check">
                   <input
                     type="checkbox"
@@ -213,7 +203,6 @@ export class Pomodoro extends Component {
                   <label htmlFor="notification"></label>
                   <span className="checkTitle" >Notification</span>
                 </span>
-
                 <span className="check">
                   <input
                     type="checkbox"
@@ -228,7 +217,6 @@ export class Pomodoro extends Component {
               </div> {/* controlsCheck */}
             </div> {/* container */}
           </div> {/* controls */}
-          {/* <Footer /> */}
         </div> {/* bottomBar */}
       </div> /* bottomBar */
     );

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import alert from './alarm.mp3';
+import relax from './coffee.png';
+import work from './code.png'
 
 export class Pomodoro extends Component {
   constructor() {
@@ -135,18 +137,18 @@ export class Pomodoro extends Component {
     if(this.refs.audio.checked) {
       let audio = new Audio(alert);
       audio.play();
-      // setTimeout(()=> audio.pause(), 1400);
+      setTimeout(()=> audio.pause(), 2500);
     }
     // notification
     if(this.refs.notification.checked) {
       if (this.state.timeType === 1500) {
         let notification = new Notification("Relax :)", {
-          icon: "coffee.png",
+          icon: relax,
           body: "Go talk or drink a coffee."
         });
       } else {
         let notification = new Notification("The time is over!", {
-          icon: "code.png",
+          icon: work,
           body: "Hey, back to work!"
         });
       }
